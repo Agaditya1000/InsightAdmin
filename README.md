@@ -63,15 +63,18 @@ InsightAdmin/
 ### 1. Authentication Portal
 > [!NOTE]
 > Add your login screen screenshot here to demonstrate the secure entry point.
-![Login Screen Placeholder](https://via.placeholder.com/600x350.png?text=Login+Portal+Screenshot)
+![Login Screen Placeholder]<img width="1903" height="911" alt="image" src="https://github.com/user-attachments/assets/536259f0-3a3c-4f85-8dd7-0c2d13e2328a" />
+
 
 ### 2. Administrative Dashboard
 > [!TIP]
 > This view shows the live MongoDB aggregations for signups and sales.
-![Dashboard Screenshot Placeholder](https://via.placeholder.com/600x350.png?text=Admin+Dashboard+Screenshot)
+![Dashboard Screenshot Placeholder]<img width="1913" height="919" alt="image" src="https://github.com/user-attachments/assets/32d2c1b1-e876-4530-94f1-01151105e71f" />
+
 
 ### 3. User & Content Management
-![User Management Screenshot Placeholder](https://via.placeholder.com/600x350.png?text=User+Management+Screenshot)
+![User Management Screenshot Placeholder]<img width="1919" height="967" alt="image" src="https://github.com/user-attachments/assets/11e95a9c-0018-4ce9-84ec-3e1471ffef07" />
+
 
 ---
 
