@@ -7,10 +7,9 @@ InsightAdmin is a full-stack administrative platform built with the **MEAN stack
 ## 🖼️ Preview
 
 <div align="center">
-  <img src="<img width="1911" height="921" alt="image" src="https://github.com/user-attachments/assets/88ecf246-7b08-48ec-9df0-1f2dad0d6283" />
-" alt="Dashboard Overview" width="800">
-  <p><i>Figure 1: Real-time Analytics Dashboard showing User Growth and Role Distribution.</i></p>
+<img width="1911" height="921" alt="image" src="https://github.com/user-attachments/assets/23640048-27a8-4561-bae5-8fc8e70f909a" />
 </div>
+<img width="1911" height="921" alt="image" src="https://github.com/user-attachments/assets/23640048-27a8-4561-bae5-8fc8e70f909a" />
 
 ---
 
