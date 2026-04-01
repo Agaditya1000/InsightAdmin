@@ -1,0 +1,16 @@
+# Node Modules
+node_modules/
+
+# Environment Variables
+.env
+.env.*
+!.env.example
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+.history/
