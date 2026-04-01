@@ -9,8 +9,10 @@ InsightAdmin is a full-stack administrative platform built with the **MEAN stack
 <div align="center">
 
 </div>
-<img width="1913" height="919" alt="image" src="https://github.com/user-attachments/assets/a2328d23-3dbc-411a-92eb-40246a7b6141" />
-<img width="1913" height="911" alt="image" src="https://github.com/user-attachments/assets/14a1cbe6-cac3-484f-b2de-24807127e723" />
+<img width="1919" height="966" alt="image" src="https://github.com/user-attachments/assets/14e71314-cd8b-41a2-9da4-626e7d4f2ae9" />
+<img width="1909" height="899" alt="image" src="https://github.com/user-attachments/assets/edf8a3ca-ce0e-4388-9df2-651409632fe0" />
+
+
 
 
 
@@ -69,11 +71,12 @@ InsightAdmin/
 ### 2. Administrative Dashboard
 > [!TIP]
 > This view shows the live MongoDB aggregations for signups and sales.
-![Dashboard Screenshot Placeholder]<img width="1913" height="919" alt="image" src="https://github.com/user-attachments/assets/32d2c1b1-e876-4530-94f1-01151105e71f" />
+![Dashboard Screenshot Placeholder]<img width="1919" height="966" alt="image" src="https://github.com/user-attachments/assets/24ea45f9-3e1d-463e-b5a0-dc06b244b8b0" />
+
 
 
 ### 3. User & Content Management
-![User Management Screenshot Placeholder]<img width="1919" height="967" alt="image" src="https://github.com/user-attachments/assets/11e95a9c-0018-4ce9-84ec-3e1471ffef07" />
+![User Management Screenshot Placeholder]<img width="1919" height="969" alt="image" src="https://github.com/user-attachments/assets/f039faaa-fc4f-4b11-8061-93a29d7a4474" />
 
 
 ---
