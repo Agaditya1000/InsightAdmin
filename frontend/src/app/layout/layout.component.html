@@ -7,7 +7,7 @@
     <nav class="flex-1 p-4 space-y-2 font-medium">
       <a routerLink="/dashboard" routerLinkActive="bg-gray-800 border-l-4 border-blue-500" class="block py-3 px-4 rounded transition-all duration-200 hover:bg-gray-800 hover:translate-x-1 outline-none">Dashboard</a>
       <a routerLink="/profile" routerLinkActive="bg-gray-800 border-l-4 border-blue-500" class="block py-3 px-4 rounded transition-all duration-200 hover:bg-gray-800 hover:translate-x-1 outline-none">My Profile</a>
-      <a *ngIf="authService.isAdmin" routerLink="/content" routerLinkActive="bg-gray-800 border-l-4 border-blue-500" class="block py-3 px-4 rounded transition-all duration-200 hover:bg-gray-800 hover:translate-x-1 outline-none">Content Management</a>
+      <a routerLink="/content" routerLinkActive="bg-gray-800 border-l-4 border-blue-500" class="block py-3 px-4 rounded transition-all duration-200 hover:bg-gray-800 hover:translate-x-1 outline-none">Announcements</a>
       <a *ngIf="authService.isAdmin" routerLink="/users" routerLinkActive="bg-gray-800 border-l-4 border-blue-500" class="block py-3 px-4 rounded transition-all duration-200 hover:bg-gray-800 hover:translate-x-1 outline-none">User Management</a>
     </nav>
     <div class="p-4">

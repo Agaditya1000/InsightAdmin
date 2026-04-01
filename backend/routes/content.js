@@ -3,7 +3,7 @@ const router = express.Router();
 const { auth, admin } = require('../middleware/auth');
 const Content = require('../models/Content');
 
-router.get('/', [auth, admin], async (req, res) => {
+router.get('/', auth, async (req, res) => {
   try {
     const contents = await Content.find().sort({ createdAt: -1 });
     res.json(contents);

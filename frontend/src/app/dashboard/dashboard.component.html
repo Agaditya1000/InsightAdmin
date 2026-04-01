@@ -1,83 +1,193 @@
-<div *ngIf="errorMsg" class="flex flex-col items-center justify-center h-[500px] bg-white rounded-xl border-2 border-dashed border-red-100 p-12 text-center">
-  <div class="p-4 bg-red-50 rounded-full mb-6">
-    <svg class="h-12 w-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-  </div>
-  <h3 class="text-2xl font-bold text-gray-800 mb-2">Access Restricted</h3>
-  <p class="text-gray-500 max-w-sm mx-auto font-medium leading-relaxed">{{ errorMsg }}</p>
-  <button (click)="ngOnInit()" class="mt-8 text-blue-600 font-bold hover:underline">Try Again</button>
-</div>
-
-<div *ngIf="!errorMsg">
-  <!-- Metrics Summary Cards -->
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-    <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="text-gray-400 font-bold text-xs uppercase tracking-widest">Active Accounts</h3>
-        <div class="p-2 bg-blue-50 text-blue-600 rounded-lg">
-          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-        </div>
-      </div>
-      <p class="text-4xl font-black text-gray-800 tracking-tighter">{{ metrics?.activeUsers ?? '---' }}</p>
-      <div class="mt-4 flex items-center text-xs font-bold text-gray-400 uppercase tracking-tighter">
-        <span>Verified System Accounts</span>
-      </div>
-    </div>
-
-    <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="text-gray-400 font-bold text-xs uppercase tracking-widest">Growth Rate</h3>
-        <div class="p-2 bg-green-50 text-green-600 rounded-lg">
-          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
-        </div>
-      </div>
-      <p class="text-4xl font-black text-gray-800 tracking-tighter">{{ metrics?.recentSignups ?? '---' }}</p>
-      <div class="mt-4 flex items-center text-xs font-bold text-blue-500 uppercase tracking-tighter">
-        <span>New users (Last 7 days)</span>
-      </div>
-    </div>
-
-    <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="text-gray-400 font-bold text-xs uppercase tracking-widest">Aggregate Value</h3>
-        <div class="p-2 bg-purple-50 text-purple-600 rounded-lg">
-          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-        </div>
-      </div>
-      <p class="text-4xl font-black text-gray-800 tracking-tighter">${{ metrics?.sales?.[metrics.sales.length - 1] ?? '0' }}</p>
-      <div class="mt-4 flex items-center text-xs font-bold text-gray-400 uppercase tracking-tighter">
-        <span>Calculated from signups</span>
-      </div>
-    </div>
+<div class="p-6">
+  <!-- Error Message -->
+  <div *ngIf="errorMsg" class="mb-6 p-4 bg-red-100 border border-red-200 text-red-700 rounded-xl flex items-center gap-3 animate-shake">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+    <span class="font-bold">{{ errorMsg }}</span>
   </div>
 
-  <!-- Charts Section -->
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8" *ngIf="metrics">
-    <div class="lg:col-span-2 bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-      <div class="flex justify-between items-center mb-8">
-        <div>
-          <h3 class="text-xl font-black text-gray-800">User Growth Trends</h3>
-          <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mt-1">Daily aggregated signups</p>
-        </div>
-        <button class="bg-gray-50 text-xs font-black px-4 py-2 rounded-lg border border-gray-100 hover:bg-gray-100 transition-colors">Export CSV</button>
+  <!-- Admin View -->
+  <div *ngIf="isAdmin">
+    <div class="mb-8 flex justify-between items-end">
+      <div>
+        <h2 class="text-4xl font-black text-gray-900 tracking-tight">Executive Summary</h2>
+        <p class="text-gray-500 mt-2 text-lg">Real-time platform performance & revenue analytics.</p>
       </div>
-      <div class="h-[400px]">
-        <canvas baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="lineChartType"></canvas>
+      <div *ngIf="!isLoading" class="flex items-center gap-2 text-green-600 font-bold bg-green-50 px-4 py-2 rounded-full border border-green-100 animate-pulse">
+        <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+        Live Updates Active
       </div>
     </div>
 
-    <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-       <h3 class="text-xl font-black text-gray-800 mb-2">Role Split</h3>
-       <p class="text-xs text-gray-400 font-bold uppercase tracking-widest mb-8">Headcount distribution</p>
-       <div class="h-[300px] flex items-center justify-center">
-         <canvas baseChart [data]="pieChartData" [options]="{responsive: true}" [type]="pieChartType"></canvas>
-       </div>
+    <!-- KPI Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+      <!-- Total Users -->
+      <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 group">
+        <div class="flex justify-between items-start">
+          <div>
+            <p class="text-xs font-black text-gray-400 uppercase tracking-widest mb-1">Total Users</p>
+            <h3 *ngIf="!isLoading" class="text-3xl font-black text-gray-900">{{ metrics?.totalUsers || 0 }}</h3>
+            <div *ngIf="isLoading" class="h-8 w-24 bg-gray-100 animate-pulse rounded-lg"></div>
+          </div>
+          <div class="p-3 bg-blue-50 text-blue-600 rounded-2xl group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Users -->
+      <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 group">
+        <div class="flex justify-between items-start">
+          <div>
+            <p class="text-xs font-black text-gray-400 uppercase tracking-widest mb-1">Active Now</p>
+            <h3 *ngIf="!isLoading" class="text-3xl font-black text-green-600">{{ metrics?.activeUsers || 0 }}</h3>
+            <div *ngIf="isLoading" class="h-8 w-24 bg-gray-100 animate-pulse rounded-lg"></div>
+          </div>
+          <div class="p-3 bg-green-50 text-green-600 rounded-2xl group-hover:bg-green-600 group-hover:text-white transition-colors duration-300">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Total Sales -->
+      <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 group">
+        <div class="flex justify-between items-start">
+          <div>
+            <p class="text-xs font-black text-gray-400 uppercase tracking-widest mb-1">Total Revenue</p>
+            <h3 *ngIf="!isLoading" class="text-3xl font-black text-gray-900">${{ salesStats?.totalRevenue | number:'1.2-2' }}</h3>
+            <div *ngIf="isLoading" class="h-8 w-24 bg-gray-100 animate-pulse rounded-lg"></div>
+          </div>
+          <div class="p-3 bg-emerald-50 text-emerald-600 rounded-2xl group-hover:bg-emerald-600 group-hover:text-white transition-colors duration-300">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Weekly Growth -->
+      <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 group">
+        <div class="flex justify-between items-start">
+          <div>
+            <p class="text-xs font-black text-gray-400 uppercase tracking-widest mb-1">Weekly Revenue</p>
+            <h3 *ngIf="!isLoading" class="text-3xl font-black text-blue-600">${{ salesStats?.weeklyRevenue | number:'1.2-2' }}</h3>
+            <div *ngIf="isLoading" class="h-8 w-24 bg-gray-100 animate-pulse rounded-lg"></div>
+          </div>
+          <div class="p-3 bg-blue-50 text-blue-600 rounded-2xl group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+      <!-- User Growth Chart -->
+      <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-100">
+        <div class="flex items-center justify-between mb-8">
+          <h4 class="text-xl font-black text-gray-900 flex items-center gap-3">
+            <span class="w-2 h-8 bg-blue-600 rounded-full"></span>
+            User Acquisition
+          </h4>
+          <span class="text-sm font-bold text-gray-400 bg-gray-50 px-3 py-1 rounded-lg">Last 7 Days</span>
+        </div>
+        <div class="h-[300px] relative">
+          <canvas *ngIf="!isLoading" baseChart [data]="lineChartData" [options]="chartOptions" [type]="lineChartType"></canvas>
+          <div *ngIf="isLoading" class="absolute inset-0 flex items-center justify-center bg-gray-50/50 rounded-2xl animate-pulse">
+            <p class="text-gray-400 font-bold uppercase tracking-widest text-xs">Loading Charts...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sales Revenue Chart -->
+      <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-100">
+        <div class="flex items-center justify-between mb-8">
+          <h4 class="text-xl font-black text-gray-900 flex items-center gap-3">
+            <span class="w-2 h-8 bg-emerald-600 rounded-full"></span>
+            Revenue Streams
+          </h4>
+          <span class="text-sm font-bold text-green-600 bg-green-50 px-3 py-1 rounded-lg">Daily Revenue ($)</span>
+        </div>
+        <div class="h-[300px] relative">
+          <canvas *ngIf="!isLoading" baseChart [data]="salesChartData" [options]="chartOptions" [type]="barChartType"></canvas>
+          <div *ngIf="isLoading" class="absolute inset-0 flex items-center justify-center bg-gray-50/50 rounded-2xl animate-pulse">
+            <p class="text-gray-400 font-bold uppercase tracking-widest text-xs">Syncing Sales Data...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Role Distribution -->
+      <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-100 lg:col-span-2">
+        <div class="flex items-center gap-3 mb-8">
+          <span class="w-2 h-8 bg-purple-600 rounded-full"></span>
+          <h4 class="text-xl font-black text-gray-900">Platform Demographics</h4>
+        </div>
+        <div class="h-[300px] flex items-center justify-center relative">
+          <canvas *ngIf="!isLoading" baseChart [data]="pieChartData" [type]="pieChartType" [options]="chartOptions"></canvas>
+          <div *ngIf="isLoading" class="absolute inset-0 flex items-center justify-center animate-pulse">
+              <div class="w-48 h-48 rounded-full border-8 border-gray-100 border-t-purple-500 animate-spin"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Loading State -->
-  <div *ngIf="!metrics && !errorMsg" class="flex flex-col items-center justify-center h-[400px] bg-white rounded-2xl border-2 border-dashed border-gray-100 p-12">
-    <svg class="animate-spin h-10 w-10 text-blue-500 mb-6" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-    <span class="text-lg font-bold text-gray-800">Compiling Analytics Data...</span>
-    <p class="text-gray-400 text-sm mt-2 font-medium">This may take a moment based on DB complexity.</p>
+  <!-- User View -->
+  <div *ngIf="!isAdmin && userProfile" class="max-w-5xl mx-auto py-10">
+    <div class="bg-gradient-to-br from-blue-600 to-indigo-700 p-12 rounded-[3rem] shadow-2xl relative overflow-hidden text-white mb-10">
+      <div class="relative z-10">
+        <h2 class="text-5xl font-black mb-4 tracking-tighter">Welcome back, {{ userProfile.name }}!</h2>
+        <p class="text-xl opacity-90 font-medium max-w-xl">Your personal gateway to the platform. Track your status and stay updated with the latest announcements.</p>
+        
+        <div class="flex gap-6 mt-10">
+          <div class="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/20">
+            <p class="text-xs font-black uppercase tracking-widest opacity-60 mb-1">Status</p>
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full" [ngClass]="userProfile.isActive ? 'bg-green-400 animate-pulse' : 'bg-red-400'"></span>
+              <span class="text-2xl font-black">{{ userProfile.isActive ? 'Active Member' : 'Inactive' }}</span>
+            </div>
+          </div>
+          <div class="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/20">
+            <p class="text-xs font-black uppercase tracking-widest opacity-60 mb-1">Member Since</p>
+            <span class="text-2xl font-black uppercase tracking-tight">{{ userProfile.createdAt | date:'MMM yyyy' }}</span>
+          </div>
+        </div>
+      </div>
+      <!-- Background Shapes -->
+      <div class="absolute -top-24 -right-24 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
+      <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-indigo-500/20 rounded-full blur-3xl"></div>
+    </div>
+
+    <!-- Quick Access -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <a routerLink="/content" class="group bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-300 flex items-center justify-between">
+        <div class="flex items-center gap-6">
+          <div class="p-4 bg-blue-50 text-blue-600 rounded-3xl group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+          </div>
+          <div>
+            <h4 class="text-2xl font-black text-gray-900 group-hover:text-blue-600 transition-colors">Latest News</h4>
+            <p class="text-gray-500 font-medium">Read recent announcements</p>
+          </div>
+        </div>
+        <svg class="w-8 h-8 text-gray-300 group-hover:text-blue-500 transform group-hover:translate-x-2 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+      </a>
+
+      <a routerLink="/profile" class="group bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-300 flex items-center justify-between">
+        <div class="flex items-center gap-6">
+          <div class="p-4 bg-purple-50 text-purple-600 rounded-3xl group-hover:bg-purple-600 group-hover:text-white transition-colors duration-300">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+          </div>
+          <div>
+            <h4 class="text-2xl font-black text-gray-900 group-hover:text-purple-600 transition-colors">My Identity</h4>
+            <p class="text-gray-500 font-medium">Manage profile settings</p>
+          </div>
+        </div>
+        <svg class="w-8 h-8 text-gray-300 group-hover:text-purple-500 transform group-hover:translate-x-2 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Full Page Loader -->
+  <div *ngIf="isLoading && !metrics && !userProfile" class="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center">
+    <div class="w-20 h-20 border-8 border-blue-100 border-t-blue-600 rounded-full animate-spin mb-6"></div>
+    <p class="text-gray-400 font-black uppercase tracking-[0.3em] text-sm animate-pulse">Initializing Dashboard</p>
   </div>
 </div>

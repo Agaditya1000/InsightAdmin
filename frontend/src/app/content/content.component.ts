@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../services/api.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-content',
@@ -11,14 +12,18 @@ import { ApiService } from '../services/api.service';
 })
 export class ContentComponent implements OnInit {
   api = inject(ApiService);
+  private authService = inject(AuthService);
+  
   contents: any[] = [];
   loading = true;
+  isAdmin = false;
   
   newTitle = '';
   newBody = '';
   isAdding = false;
 
   ngOnInit() {
+    this.isAdmin = this.authService.isAdmin;
     this.loadContent();
   }
 
@@ -28,7 +33,9 @@ export class ContentComponent implements OnInit {
         this.contents = data;
         this.loading = false;
       },
-      error: (err: any) => this.loading = false
+      error: (err: any) => {
+        this.loading = false;
+      }
     });
   }
 

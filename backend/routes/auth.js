@@ -27,6 +27,13 @@ router.post('/register', registerValidator, async (req, res) => {
     const payload = { user: { id: user.id, role: user.role } };
     jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '5h' }, (err, token) => {
       if (err) throw err;
+      
+      // Real-time update for admins
+      const io = req.app.get('socketio');
+      if (io) {
+        io.emit('newUser', { id: user.id, name: user.name, role: user.role });
+      }
+
       res.json({ token, user: { id: user.id, name: user.name, role: user.role, email: user.email } });
     });
   } catch (err) {

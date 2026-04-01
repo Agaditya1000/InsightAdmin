@@ -46,4 +46,13 @@ export class ApiService {
   deleteContent(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/content/${id}`);
   }
+
+  // Sales Analytics
+  getSalesStats(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/admin/sales/stats`);
+  }
+
+  addSale(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/admin/sales`, data);
+  }
 }
