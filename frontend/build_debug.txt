@@ -1,0 +1,2 @@
+Application bundle generation failed. [8.089 seconds]
+

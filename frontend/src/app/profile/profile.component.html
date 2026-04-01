@@ -1,0 +1,40 @@
+<div class="max-w-2xl mx-auto bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+  <div class="p-8 border-b border-gray-100 bg-gray-50/50">
+    <h3 class="text-2xl font-bold text-gray-800 tracking-tight">Your Profile</h3>
+    <p class="text-sm text-gray-500 mt-1 font-medium">Manage your personal information and account settings.</p>
+  </div>
+
+  <div *ngIf="user" class="p-8 space-y-6">
+    <div *ngIf="message" [ngClass]="isError ? 'bg-red-50 text-red-600 border-red-100' : 'bg-green-50 text-green-600 border-green-100'" class="p-4 rounded-lg border font-medium transition-all">
+      {{ message }}
+    </div>
+
+    <div>
+      <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">Full Name</label>
+      <input type="text" [(ngModel)]="user.name" class="w-full border-2 border-gray-100 rounded-lg p-3 focus:border-blue-500 focus:ring-0 outline-none transition-colors" placeholder="Your Name">
+    </div>
+
+    <div>
+      <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">Email Address</label>
+      <input type="email" [(ngModel)]="user.email" class="w-full border-2 border-gray-100 rounded-lg p-3 focus:border-blue-500 focus:ring-0 outline-none transition-colors" placeholder="email@example.com">
+    </div>
+
+    <div>
+      <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">Account Role</label>
+      <div class="p-3 bg-gray-50 rounded-lg text-gray-500 font-medium border border-gray-100 capitalize">
+        {{ user.role }}
+      </div>
+    </div>
+
+    <div class="pt-4">
+      <button (click)="save()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg shadow-blue-200 transition-all duration-200 outline-none transform active:scale-95">
+        Save Changes
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="!user" class="p-20 text-center text-gray-400">
+     <svg class="animate-spin h-8 w-8 mx-auto mb-4 text-blue-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+     Loading your details...
+  </div>
+</div>
